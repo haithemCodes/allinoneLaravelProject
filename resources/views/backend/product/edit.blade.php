@@ -104,6 +104,16 @@
         </div>
 
         <div class="form-group">
+          <label for="range_id">Product Range</label>
+          <select name="range_id" class="form-control">
+              <option value="">--Select Product Range--</option>
+              @foreach($productRanges as $range)
+                  <option value="{{$range->id}}" {{(($product->range_id==$range->id)? 'selected' : '')}}>{{$range->title}}</option>
+              @endforeach
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="condition">Condition</label>
           <select name="condition" class="form-control">
               <option value="">--Select Condition--</option>

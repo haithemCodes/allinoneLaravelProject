@@ -9,6 +9,7 @@ use App\Models\PostCategory;
 use App\Models\Post;
 use App\Models\Cart;
 use App\Models\Brand;
+use App\Models\ProductRange;
 use App\User;
 use Auth;
 use Session;
@@ -31,14 +32,16 @@ class FrontendController extends Controller
         // return $banner;
         $products=Product::where('status','active')->orderBy('id','DESC')->limit(8)->get();
         $category=Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
+        $productRanges = ProductRange::where('status','active')->orderBy('sort_order','ASC')->get();
         // return $category;
         return view('frontend.index')
                 ->with('featured',$featured)
                 ->with('posts',$posts)
                 ->with('banners',$banners)
                 ->with('product_lists',$products)
-                ->with('category_lists',$category);
-    }   
+                ->with('category_lists',$category)
+                ->with('product_ranges',$productRanges);
+    }
 
     public function aboutUs(){
         return view('frontend.pages.about-us');
@@ -65,6 +68,16 @@ class FrontendController extends Controller
             $products->whereIn('cat_id',$cat_ids);
             // return $products;
         }
+        
+        if(!empty($_GET['range'])){
+            $range = ProductRange::where('slug', $_GET['range'])->first();
+            if($range) {
+                // In a real implementation, you would have a relationship between products and ranges
+                // For now, we'll just filter by a hypothetical 'range_id' field in products
+                $products->where('range_id', $range->id);
+            }
+        }
+        
         if(!empty($_GET['brand'])){
             $slugs=explode(',',$_GET['brand']);
             $brand_ids=Brand::select('id')->whereIn('slug',$slugs)->pluck('id')->toArray();

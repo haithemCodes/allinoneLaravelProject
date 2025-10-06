@@ -101,6 +101,21 @@
         </div>
     </li>
 
+    {{-- Product Ranges --}}
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productRangeCollapse" aria-expanded="true" aria-controls="productRangeCollapse">
+          <i class="fas fa-layer-group"></i>
+          <span>Product Ranges</span>
+        </a>
+        <div id="productRangeCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Product Range Options:</h6>
+            <a class="collapse-item" href="{{route('product-range.index')}}">Product Ranges</a>
+            <a class="collapse-item" href="{{route('product-range.create')}}">Add Product Range</a>
+          </div>
+        </div>
+    </li>
+
   
     {{-- Shipping --}}
     <li class="nav-item">

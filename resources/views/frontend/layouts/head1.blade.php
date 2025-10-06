@@ -1,13 +1,7 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
-    rel="stylesheet">
-
-<title>Hexashop Ecommerce HTML CSS Template</title>
-
-
+<!-- Meta Tag -->
+@yield('meta')
+<!-- Title Tag  -->
+<title>@yield('title')</title>
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="images/favicon.png">
 <!-- Web Font -->
@@ -47,16 +41,3 @@
     src='https://platform-api.sharethis.com/js/sharethis.js#property=5f2e5abf393162001291e431&product=inline-share-buttons'
     async='async'></script>
 @stack('styles')
-
-<!-- Additional CSS Files -->
-<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/bootstrap.min.css') }}">
-
-<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/font-awesome.css') }}">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-<link rel="stylesheet" href="{{ asset('frontend/css/templatemo-hexashop.css') }}">
-
-<link rel="stylesheet" href="{{ asset('frontend/css/owl-carousel.css') }}">
-
-<link rel="stylesheet" href="{{ asset('frontend/css/lightbox.css') }}">

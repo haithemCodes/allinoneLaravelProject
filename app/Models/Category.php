@@ -50,4 +50,9 @@ class Category extends Model
         }
         return 0;
     }
+    
+    public function productRanges()
+    {
+        return $this->belongsToMany(ProductRange::class, 'category_product_range', 'category_id', 'product_range_id');
+    }
 }

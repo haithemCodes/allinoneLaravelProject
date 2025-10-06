@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\ProductRange;
 
 use Illuminate\Support\Str;
 
@@ -31,7 +32,8 @@ class ProductController extends Controller
     {
         $brands = Brand::get();
         $categories = Category::where('is_parent', 1)->get();
-        return view('backend.product.create', compact('categories', 'brands'));
+        $productRanges = ProductRange::where('status', 'active')->orderBy('sort_order', 'asc')->get();
+        return view('backend.product.create', compact('categories', 'brands', 'productRanges'));
     }
 
     /**
@@ -52,6 +54,7 @@ class ProductController extends Controller
             'cat_id' => 'required|exists:categories,id',
             'brand_id' => 'nullable|exists:brands,id',
             'child_cat_id' => 'nullable|exists:categories,id',
+            'range_id' => 'nullable|exists:product_ranges,id',
             'is_featured' => 'sometimes|in:1',
             'status' => 'required|in:active,inactive',
             'condition' => 'required|in:default,new,hot',
@@ -104,8 +107,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categories = Category::where('is_parent', 1)->get();
         $items = Product::where('id', $id)->get();
+        $productRanges = ProductRange::where('status', 'active')->orderBy('sort_order', 'asc')->get();
 
-        return view('backend.product.edit', compact('product', 'brands', 'categories', 'items'));
+        return view('backend.product.edit', compact('product', 'brands', 'categories', 'items', 'productRanges'));
     }
 
     /**
@@ -128,6 +132,7 @@ class ProductController extends Controller
             'stock' => 'required|numeric',
             'cat_id' => 'required|exists:categories,id',
             'child_cat_id' => 'nullable|exists:categories,id',
+            'range_id' => 'nullable|exists:product_ranges,id',
             'is_featured' => 'sometimes|in:1',
             'brand_id' => 'nullable|exists:brands,id',
             'status' => 'required|in:active,inactive',

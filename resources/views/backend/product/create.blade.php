@@ -60,7 +60,7 @@
 
         <div class="form-group">
           <label for="price" class="col-form-label">Price(NRS) <span class="text-danger">*</span></label>
-          <input id="price" type="number" name="price" placeholder="Enter price"  value="{{old('price')}}" class="form-control">
+          <input id="price" type="number" name="price" placeholder="Enter price"  value="{{old('price') ?? '0'}}" class="form-control">
           @error('price')
           <span class="text-danger">{{$message}}</span>
           @enderror
@@ -97,6 +97,16 @@
         </div>
 
         <div class="form-group">
+          <label for="range_id">Product Range</label>
+          <select name="range_id" class="form-control">
+              <option value="">--Select Product Range--</option>
+              @foreach($productRanges as $range)
+                  <option value="{{$range->id}}">{{$range->title}}</option>
+              @endforeach
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="condition">Condition</label>
           <select name="condition" class="form-control">
               <option value="">--Select Condition--</option>
@@ -108,7 +118,7 @@
 
         <div class="form-group">
           <label for="stock">Quantity <span class="text-danger">*</span></label>
-          <input id="quantity" type="number" name="stock" min="0" placeholder="Enter quantity"  value="{{old('stock')}}" class="form-control">
+          <input id="quantity" type="number" name="stock" min="0" placeholder="Enter quantity"  value="{{old('stock') ?? '0'}}" class="form-control">
           @error('stock')
           <span class="text-danger">{{$message}}</span>
           @enderror

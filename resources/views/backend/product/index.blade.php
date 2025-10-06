@@ -71,7 +71,7 @@
                     <td>  {{$product->discount}}% OFF</td>
                     <td>{{$product->size}}</td>
                     <td>{{$product->condition}}</td>
-                    <td> {{ucfirst($product->brand->title)}}</td>
+                    <td> {{ucfirst($product->brand ? $product->brand->title : 'No Brand')}}</td>
                     <td>
                       @if($product->stock>0)
                       <span class="badge badge-primary">{{$product->stock}}</span>
@@ -109,7 +109,20 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$products->links()}}</span>
+        <div class="row mt-3">
+            <div class="col-sm-12 col-md-5">
+                <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+                    Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} entries
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-7">
+                <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                    <ul class="pagination">
+                        {{ $products->links('pagination::bootstrap-4') }}
+                    </ul>
+                </div>
+            </div>
+        </div>
         @else
           <h6 class="text-center">No Products found!!! Please create Product</h6>
         @endif
