@@ -6,14 +6,13 @@
 <body class="js">
 	
 	<!-- Preloader -->
-	<div class="preloader">
-		<div class="preloader-inner">
-			<div class="preloader-icon">
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-	</div>
+	<div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 	<!-- End Preloader -->
 	
 	@include('frontend.layouts.notification')

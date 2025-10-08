@@ -9,8 +9,24 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Product Lists</h6>
-      <a href="{{route('product.create')}}" class="btn btn-primary btn-sm float-right" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Product</a>
+      <div class="float-right">
+        <form action="{{route('product.index')}}" method="GET" class="form-inline">
+          <div class="input-group">
+            <input type="text" name="search" class="form-control form-control-sm" placeholder="Search products..." value="{{ $searchTerm ?? '' }}">
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fas fa-search"></i>
+              </button>
+              @if($searchTerm)
+                <a href="{{route('product.index')}}" class="btn btn-secondary btn-sm">
+                  <i class="fas fa-times"></i>
+                </a>
+              @endif
+            </div>
+          </div>
+        </form>
+      </div>
+      <a href="{{route('product.create')}}" class="btn btn-primary btn-sm mr-2" data-toggle="tooltip" data-placement="bottom" title="Add User"><i class="fas fa-plus"></i> Add Product</a>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -157,24 +173,7 @@
 
   <!-- Page level custom scripts -->
   <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
-  <script>
-
-      $('#product-dataTable').DataTable( {
-        "scrollX": false
-            "columnDefs":[
-                {
-                    "orderable":false,
-                    "targets":[10,11,12]
-                }
-            ]
-        } );
-
-        // Sweet alert
-
-        function deleteData(id){
-
-        }
-  </script>
+  
   <script>
       $(document).ready(function(){
         $.ajaxSetup({

@@ -17,10 +17,17 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::getAllProduct();
-        return view('backend.product.index', compact('products'));
+        $searchTerm = $request->input('search');
+        
+        if ($searchTerm) {
+            $products = Product::searchProduct($searchTerm);
+        } else {
+            $products = Product::getAllProduct();
+        }
+        
+        return view('backend.product.index', compact('products', 'searchTerm'));
     }
 
     /**

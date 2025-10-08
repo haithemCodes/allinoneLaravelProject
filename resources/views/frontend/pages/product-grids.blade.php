@@ -30,10 +30,29 @@
                         <div class="shop-sidebar">
                                 <!-- Single Widget -->
                                 <div class="single-widget category">
-                                    <h3 class="title">Categories</h3>
+                                    <h3 class="title">Les Gammes</h3>
+                                    <ul class="categor-list">
+                                        @php
+											$product_ranges=App\Models\ProductRange::getAllActiveRanges();
+										@endphp
+										@if($product_ranges)
+										<li>
+											@foreach($product_ranges as $range)
+													<li><a href="{{ route('product-grids', ['range' => $range->slug]) }}">{{$range->title}}</a></li>
+											@endforeach
+										</li>
+										@endif
+                                        {{-- @foreach(Helper::productCategoryList('products') as $cat)
+                                            @if($cat->is_parent==1)
+												<li><a href="{{route('product-cat',$cat->slug)}}">{{$cat->title}}</a></li>
+											@endif
+                                        @endforeach --}}
+                                    </ul>
+                                </div>
+                                <div class="single-widget category">
+                                    <h3 class="title">Les catégories</h3>
                                     <ul class="categor-list">
 										@php
-											// $category = new Category();
 											$menu=App\Models\Category::getAllParentWithChild();
 										@endphp
 										@if($menu)
@@ -48,7 +67,7 @@
 															</ul>
 														</li>
 													@else
-														<li><a href="{{route('product-cat',$cat_info->slug)}}">{{$cat_info->title}}</a></li>
+														<li><a href="{{ route('product-grids', ['category' => $cat_info->slug]) }}">{{$cat_info->title}}</a></li>
 													@endif
 											@endforeach
 										</li>
@@ -62,7 +81,7 @@
                                 </div>
                                 <!--/ End Single Widget -->
                                 <!-- Shop By Price -->
-                                    <div class="single-widget range">
+                                    {{-- <div class="single-widget range">
                                         <h3 class="title">Shop by Price</h3>
                                         <div class="price-filter">
                                             <div class="price-filter-inner">
@@ -82,7 +101,7 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> --}}
                                     <!--/ End Shop By Price -->
                                 <!-- Single Widget -->
                                 <div class="single-widget recent-post">
@@ -99,10 +118,10 @@
                                             </div>
                                             <div class="content">
                                                 <h5><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h5>
-                                                @php
+                                                {{-- @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p>
+                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p> --}}
 
                                             </div>
                                         </div>
@@ -126,7 +145,7 @@
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8 col-12">
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-12">
                                 <!-- Shop Top -->
                                 <div class="shop-top">
@@ -159,7 +178,7 @@
                                 </div>
                                 <!--/ End Shop Top -->
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row">
                             {{-- {{$products}} --}}
                             @if(count($products)>0)
@@ -173,11 +192,11 @@
                                                     @endphp
                                                     <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                                     <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                                    @if($product->discount)
+                                                    {{-- @if($product->discount)
                                                                 <span class="price-dec">{{$product->discount}} % Off</span>
-                                                    @endif
+                                                    @endif --}}
                                                 </a>
-                                                <div class="button-head">
+                                                {{-- <div class="button-head">
                                                     <div class="product-action">
                                                         <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
                                                         <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
@@ -185,21 +204,21 @@
                                                     <div class="product-action-2">
                                                         <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             <div class="product-content">
                                                 <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
-                                                @php
+                                                {{-- @php
                                                     $after_discount=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
                                                 <span>${{number_format($after_discount,2)}}</span>
-                                                <del style="padding-left:4%;">${{number_format($product->price,2)}}</del>
+                                                <del style="padding-left:4%;">${{number_format($product->price,2)}}</del> --}}
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             @else
-                                    <h4 class="text-warning" style="margin:100px auto;">There are no products.</h4>
+                                    <h4 style="margin:100px auto;">Il n'y a aucun produit.</h4>
                             @endif
 
 
@@ -207,7 +226,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 justify-content-center d-flex">
-                                {{$products->appends($_GET)->links()}}
+                                {{ $products->links('pagination::bootstrap-4') }}
                             </div>
                           </div>
 
@@ -376,7 +395,7 @@
     .filter_button{
         /* height:20px; */
         text-align: center;
-        background:#F7941D;
+        background:#2a2a2a;
         padding:8px 16px;
         margin-top:10px;
         color: white;

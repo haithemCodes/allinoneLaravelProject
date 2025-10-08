@@ -60,21 +60,19 @@ class Helper
         // dd($menu);
         if ($menu) {
             ?>
-
             <li class="submenu">
                 <a href="javascript:;">Catégories</a>
                 <ul>
                     <?php
-                                foreach ($menu as $cat_info) {
-                                    // dd($cat_info->title);
-                                    ?>
-                         <li><a href="<?php echo route('product-cat', $cat_info->slug); ?>"><?php echo $cat_info->title; ?></a></li>   
+                        foreach ($menu as $cat_info) {
+                    ?>
+                         <li><a href="<?php echo route('product-grids', ['category' => $cat_info->slug]); ?>"><?php echo $cat_info->title; ?></a></li>   
                     <?php
-                                }
-            ?>
+                        }
+                    ?>
                 </ul>
             </li>
-<?php
+            <?php
         }
     }
 
@@ -123,7 +121,7 @@ class Helper
     {
         return Category::orderBy('title', 'asc')->take(3)->get();
     }
-    
+
     /**
      * Get list of all product ranges
      *

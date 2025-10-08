@@ -17,6 +17,24 @@ class Product extends Model
     public static function getAllProduct(){
         return Product::with(['cat_info','sub_cat_info'])->orderBy('id','desc')->paginate(10);
     }
+    
+    public static function searchProduct($searchTerm){
+        return Product::with(['cat_info','sub_cat_info'])
+            ->where('title', 'like', '%'.$searchTerm.'%')
+            ->orWhere('description', 'like', '%'.$searchTerm.'%')
+            ->orWhere('summary', 'like', '%'.$searchTerm.'%')
+            ->orWhereHas('cat_info', function($query) use ($searchTerm) {
+                $query->where('title', 'like', '%'.$searchTerm.'%');
+            })
+            ->orWhereHas('sub_cat_info', function($query) use ($searchTerm) {
+                $query->where('title', 'like', '%'.$searchTerm.'%');
+            })
+            ->orWhereHas('brand', function($query) use ($searchTerm) {
+                $query->where('title', 'like', '%'.$searchTerm.'%');
+            })
+            ->orderBy('id','desc')
+            ->paginate(10);
+    }
     public function rel_prods(){
         return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->orderBy('id','DESC')->limit(8);
     }
